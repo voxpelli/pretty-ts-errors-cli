@@ -54,3 +54,4 @@ Record<
 
 .
 
+_Generated using [`@voxpelli/pretty-ts-errors-cli`](https://github.com/voxpelli/pretty-ts-errors-cli)_

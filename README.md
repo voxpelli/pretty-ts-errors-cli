@@ -37,12 +37,12 @@ Markdown output:
 cat examples/input.txt | pretty-ts-errors -m
 ```
 
-Example Markdown output:
+## Example output
 
-> Type `typeof import("/home/runner/work/neostandard/neostandard/node_modules/@stylistic/eslint-plugin/dist/dts/index")` is not assignable to type > `Plugin`.
+> Type `typeof import("/home/runner/work/neostandard/neostandard/node_modules/@stylistic/eslint-plugin/dist/dts/index")` is not assignable to type `Plugin`.
 >   Types of property `configs` are incompatible.
 >     Type:
-> ```type
+> ```ts
 > {
 >   "disable-legacy": Config<RulesRecord>;
 >   customize: {
@@ -60,8 +60,9 @@ Example Markdown output:
 >   "recommended-legacy": BaseConfig<...>;
 > }
 > ```
+>
 >  is not assignable to type:
-> ```type
+> ```ts
 > Record<
 >   string,
 >   | Config<RulesRecord>
@@ -69,10 +70,11 @@ Example Markdown output:
 >   | Config<RulesRecord>[]
 > >
 > ```
+>
 > .
 >       Property `'customize'` is incompatible with index signature.
 >         Type:
-> ```type
+> ```ts
 > {
 >   (options: StylisticCustomizeOptions<false>): BaseConfig<
 >     RulesRecord,
@@ -83,13 +85,18 @@ Example Markdown output:
 >   ): Config<...>;
 > }
 > ```
+>
 >  is not assignable to type:
-> ```type
+> ```ts
 > | Config<RulesRecord>
 >   | LegacyConfig<RulesRecord, RulesRecord>
 >   | Config<RulesRecord>[]
 > ```
+>
 > .
+>
+> _Generated using [`@voxpelli/pretty-ts-errors-cli`](https://github.com/voxpelli/pretty-ts-errors-cli)_
+
 
 <!-- ## Used by
 
