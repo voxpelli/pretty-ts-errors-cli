@@ -1,11 +1,11 @@
 {
-  "name": "@voxpelli/node-cli-template",
+  "name": "@voxpelli/pretty-ts-errors-cli",
   "version": "0.0.0",
-  "description": "A GitHub template repo for node cli tools",
-  "homepage": "http://github.com/voxpelli/node-cli-template",
+  "description": "CLI helper for pretty ts errors",
+  "homepage": "http://github.com/voxpelli/pretty-ts-errors-cli",
   "repository": {
     "type": "git",
-    "url": "git://github.com/voxpelli/node-cli-template.git"
+    "url": "git://github.com/voxpelli/pretty-ts-errors-cli.git"
   },
   "keywords": [],
   "author": "Pelle Wessman <pelle@kodfabrik.se> (http://kodfabrik.se/)",
@@ -14,7 +14,7 @@
     "node": "^20.9.0 || >=21.1.0"
   },
   "bin": {
-    "node-cli-template": "cli.js"
+    "pretty-ts-errors": "cli.js"
   },
   "type": "module",
   "files": [
@@ -28,6 +28,8 @@
     "check:tsc": "tsc",
     "check:type-coverage": "type-coverage --detail --strict --at-least 99 --ignore-files 'test/*'",
     "check": "run-p check:*",
+    "example-ansi": "cat examples/input.txt | node cli.js",
+    "example-md": "cat examples/input.txt | node cli.js -m > examples/output.md",
     "prepare": "husky",
     "test:mocha": "c8 --reporter=lcov --reporter=text mocha 'test/**/*.spec.js'",
     "test-ci": "run-s test:*",
@@ -53,8 +55,11 @@
     "typescript": "~5.5.3"
   },
   "dependencies": {
+    "@pretty-ts-errors/formatter": "^0.1.7",
     "@voxpelli/typed-utils": "^1.10.2",
-    "markdown-or-chalk": "^0.2.2",
+    "boxen": "^8.0.1",
+    "get-stdin": "^9.0.0",
+    "markdown-or-chalk": "^0.2.3",
     "peowly": "^1.3.2",
     "pony-cause": "^2.1.11"
   }
