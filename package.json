@@ -1,6 +1,6 @@
 {
   "name": "@voxpelli/pretty-ts-errors-cli",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "CLI helper for pretty ts errors",
   "homepage": "http://github.com/voxpelli/pretty-ts-errors-cli",
   "repository": {
