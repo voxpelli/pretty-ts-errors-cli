@@ -1,7 +1,7 @@
 Type `typeof import("/home/runner/work/neostandard/neostandard/node_modules/@stylistic/eslint-plugin/dist/dts/index")` is not assignable to type `Plugin`.
   Types of property `configs` are incompatible.
     Type: 
-```type
+```ts
 {
   "disable-legacy": Config<RulesRecord>;
   customize: {
@@ -19,8 +19,9 @@ Type `typeof import("/home/runner/work/neostandard/neostandard/node_modules/@sty
   "recommended-legacy": BaseConfig<...>;
 }
 ```
+
  is not assignable to type: 
-```type
+```ts
 Record<
   string,
   | Config<RulesRecord>
@@ -28,10 +29,11 @@ Record<
   | Config<RulesRecord>[]
 >
 ```
+
 .
       Property `'customize'` is incompatible with index signature.
         Type: 
-```type
+```ts
 {
   (options: StylisticCustomizeOptions<false>): BaseConfig<
     RulesRecord,
@@ -42,11 +44,13 @@ Record<
   ): Config<...>;
 }
 ```
+
  is not assignable to type: 
-```type
+```ts
 | Config<RulesRecord>
   | LegacyConfig<RulesRecord, RulesRecord>
   | Config<RulesRecord>[]
 ```
+
 .
 
