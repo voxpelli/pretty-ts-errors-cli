@@ -41,7 +41,7 @@
     "@types/mocha": "^10.0.7",
     "@types/node": "^18.19.39",
     "@voxpelli/eslint-config": "^22.1.0",
-    "@voxpelli/tsconfig": "^14.0.0",
+    "@voxpelli/tsconfig": "^15.1.0",
     "c8": "^10.1.2",
     "chai": "^4.5.0",
     "chai-as-promised": "^7.1.2",
@@ -51,8 +51,8 @@
     "knip": "^5.38.3",
     "mocha": "^10.6.0",
     "npm-run-all2": "^7.0.1",
-    "type-coverage": "^2.29.1",
-    "typescript": "~5.5.3"
+    "type-coverage": "^2.29.7",
+    "typescript": "~5.7.2"
   },
   "dependencies": {
     "@pretty-ts-errors/formatter": "^0.1.7",
