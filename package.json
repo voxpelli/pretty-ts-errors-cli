@@ -36,9 +36,9 @@
     "test": "run-s check test:*"
   },
   "devDependencies": {
-    "@types/chai": "^4.3.19",
+    "@types/chai": "^4.3.20",
     "@types/chai-as-promised": "^7.1.8",
-    "@types/mocha": "^10.0.7",
+    "@types/mocha": "^10.0.10",
     "@types/node": "^18.19.39",
     "@voxpelli/eslint-config": "^22.1.0",
     "@voxpelli/tsconfig": "^14.0.0",
@@ -46,10 +46,10 @@
     "chai": "^4.5.0",
     "chai-as-promised": "^7.1.2",
     "eslint": "^9.16.0",
-    "husky": "^9.1.5",
+    "husky": "^9.1.7",
     "installed-check": "^9.3.0",
     "knip": "^5.38.3",
-    "mocha": "^10.6.0",
+    "mocha": "^10.8.2",
     "npm-run-all2": "^7.0.1",
     "type-coverage": "^2.29.1",
     "typescript": "~5.5.3"
