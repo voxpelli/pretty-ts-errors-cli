@@ -40,7 +40,7 @@
     "@types/chai-as-promised": "^7.1.8",
     "@types/mocha": "^10.0.10",
     "@types/node": "^18.19.67",
-    "@voxpelli/eslint-config": "^22.1.0",
+    "@voxpelli/eslint-config": "^23.0.0",
     "@voxpelli/tsconfig": "^15.1.0",
     "c8": "^10.1.2",
     "chai": "^4.5.0",
