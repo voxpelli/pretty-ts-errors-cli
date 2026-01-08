@@ -27,27 +27,18 @@ describe('action()', () => {
     const inputText = await readFile(new URL('fixtures/input.txt', import.meta.url), 'utf8');
     const stream = Readable.from([inputText]);
 
-    // Capture console output
-    const originalLog = console.log;
-    /** @type {string[]} */
-    const logs = [];
-    // eslint-disable-next-line no-console
-    console.log = /** @param {string} msg */ (msg) => { logs.push(msg); };
-
-    try {
-      await action({
-        inputStream: stream,
-        outputMarkdown: true,
-      });
-
-      // Check that we got formatted output
-      const result = logs.join('\n') + '\n';
-      // eslint-disable-next-line security/detect-non-literal-fs-filename
-      result.should.equal(await readFile(new URL('fixtures/output.md', import.meta.url), 'utf8'));
-    } finally {
-      // eslint-disable-next-line no-console
-      console.log = originalLog;
+    const outputs = [];
+    for await (const output of action({
+      inputStream: stream,
+      outputMarkdown: true,
+    })) {
+      outputs.push(output);
     }
+
+    // Check that we got formatted output
+    const result = outputs.join('\n') + '\n';
+    // eslint-disable-next-line security/detect-non-literal-fs-filename
+    result.should.equal(await readFile(new URL('fixtures/output.md', import.meta.url), 'utf8'));
   });
 
   it('should handle tsc output format', async () => {
@@ -62,25 +53,17 @@ describe('action()', () => {
 
     const stream = Readable.from([tscOutput]);
 
-    const originalLog = console.log;
-    /** @type {string[]} */
-    const logs = [];
-    // eslint-disable-next-line no-console
-    console.log = /** @param {string} msg */ (msg) => { logs.push(msg); };
-
-    try {
-      await action({
-        inputStream: stream,
-        outputMarkdown: false,
-      });
-
-      // Check that we got formatted output
-      logs.length.should.be.greaterThan(0);
-      const output = stripAnsi(logs.join(''));
-      output.should.include('Type "number" is not assignable to type "string"');
-    } finally {
-      // eslint-disable-next-line no-console
-      console.log = originalLog;
+    const outputs = [];
+    for await (const output of action({
+      inputStream: stream,
+      outputMarkdown: false,
+    })) {
+      outputs.push(output);
     }
+
+    // Check that we got formatted output
+    outputs.length.should.be.greaterThan(0);
+    const result = stripAnsi(outputs.join(''));
+    result.should.include('Type "number" is not assignable to type "string"');
   });
 });
