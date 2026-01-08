@@ -17,7 +17,7 @@ chai.should();
  */
 function stripAnsi (str) {
   // eslint-disable-next-line no-control-regex
-  return str.replaceAll(/\u001B\[\d+m/g, '');
+  return str.replaceAll(/\u001B\[[0-9;]*m/g, '');
 }
 
 describe('watchAction()', () => {
