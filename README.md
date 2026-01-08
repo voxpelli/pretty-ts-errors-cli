@@ -39,18 +39,16 @@ Markdown output:
 cat examples/input.txt | pretty-ts-errors -m
 ```
 
-### Watch mode
+### Use with TypeScript compiler
 
-Use with `tsc --watch` to format errors in real-time:
-
-```sh
-tsc --watch --pretty | pretty-ts-errors --watch
-```
-
-Or with a one-time compile:
+Works with both one-time compilation and watch mode:
 
 ```sh
-tsc --pretty 2>&1 | pretty-ts-errors --watch
+# One-time compilation
+tsc --pretty 2>&1 | pretty-ts-errors
+
+# Watch mode - get formatted errors in real-time
+tsc --watch --pretty | pretty-ts-errors
 ```
 
 **Note:** The `--pretty` flag is recommended when using tsc to get detailed error output.
