@@ -22,6 +22,8 @@ describe('command()', () => {
       // eslint-disable-next-line security/detect-non-literal-fs-filename
       mainInput: await readFile(new URL('fixtures/input.txt', import.meta.url), 'utf8'),
       outputMarkdown: false,
+      watchMode: false,
+      inputStream: undefined,
     });
   });
 

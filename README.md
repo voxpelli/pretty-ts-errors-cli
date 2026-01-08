@@ -25,6 +25,8 @@ npm install -D @voxpelli/pretty-ts-errors-cli
 
 ## Usage
 
+### Basic usage
+
 Terminal output:
 
 ```sh
@@ -36,6 +38,22 @@ Markdown output:
 ```sh
 cat examples/input.txt | pretty-ts-errors -m
 ```
+
+### Watch mode
+
+Use with `tsc --watch` to format errors in real-time:
+
+```sh
+tsc --watch --pretty | pretty-ts-errors --watch
+```
+
+Or with a one-time compile:
+
+```sh
+tsc --pretty 2>&1 | pretty-ts-errors --watch
+```
+
+**Note:** The `--pretty` flag is recommended when using tsc to get detailed error output.
 
 ## Example output
 
