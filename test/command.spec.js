@@ -4,25 +4,19 @@ import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 
 import { command } from '../lib/command.js';
-import { readFile } from 'node:fs/promises';
 
 chai.use(chaiAsPromised);
 
 chai.should();
 
 describe('command()', () => {
-  it('should accept the input', async () => {
-    const result = await command(
-      [],
-      // eslint-disable-next-line security/detect-non-literal-fs-filename
-      createReadStream(new URL('fixtures/input.txt', import.meta.url))
-    );
+  it('should return input stream', async () => {
+    const stream = createReadStream(new URL('fixtures/input.txt', import.meta.url));
+    const result = await command([], stream);
 
-    result.should.deep.equal({
-      // eslint-disable-next-line security/detect-non-literal-fs-filename
-      mainInput: await readFile(new URL('fixtures/input.txt', import.meta.url), 'utf8'),
-      outputMarkdown: false,
-    });
+    result.should.be.an('object');
+    result.should.have.property('outputMarkdown', false);
+    result.should.have.property('inputStream', stream);
   });
 
   it('should accept markdown flag', async () => {
