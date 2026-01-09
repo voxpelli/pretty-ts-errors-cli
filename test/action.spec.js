@@ -66,4 +66,50 @@ describe('action()', () => {
     const result = stripAnsi(outputs.join(''));
     result.should.include('Type "number" is not assignable to type "string"');
   });
+
+  it('should handle empty input stream gracefully', async () => {
+    const stream = Readable.from(['']);
+
+    const outputs = [];
+    for await (const output of action({
+      inputStream: stream,
+      outputMarkdown: false,
+    })) {
+      outputs.push(output);
+    }
+
+    // Empty input should produce no output
+    outputs.should.have.lengthOf(0);
+  });
+
+  it('should continue processing when formatting fails', async () => {
+    // Create a message that might cause formatting issues
+    // Using a very malformed input that could trigger an error
+    const problematicInput = 'Type \u0000invalid\u0000 error message.\nType \'string\' is valid.';
+    const stream = Readable.from([problematicInput]);
+
+    const outputs = [];
+    const errors = [];
+
+    // Capture console.error calls
+    const originalError = console.error;
+    // eslint-disable-next-line no-console
+    console.error = (...args) => { errors.push(args.join(' ')); };
+
+    try {
+      for await (const output of action({
+        inputStream: stream,
+        outputMarkdown: false,
+      })) {
+        outputs.push(output);
+      }
+
+      // Should have at least one output (the valid message)
+      // Even if the first message fails to format, processing should continue
+      outputs.length.should.be.greaterThan(0);
+    } finally {
+      // eslint-disable-next-line no-console
+      console.error = originalError;
+    }
+  });
 });

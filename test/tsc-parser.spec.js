@@ -146,5 +146,19 @@ describe('tsc-parser', () => {
       messages[0].should.not.match(/\u001B/);
       messages[0].should.equal('Type \'number\' is not assignable to type \'string\'.');
     });
+
+    it('should handle empty input stream gracefully', async () => {
+      const emptyOutput = '';
+      const stream = Readable.from([emptyOutput]);
+      const rl = createInterface({ input: stream, crlfDelay: Infinity });
+
+      const messages = [];
+      for await (const msg of parseTscErrors(rl)) {
+        messages.push(msg);
+      }
+
+      // Empty input should produce no messages
+      messages.should.have.lengthOf(0);
+    });
   });
 });
