@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 
 import { action } from '../lib/action.js';
+import { ResultError } from '../lib/utils/errors.js';
 
 /**
  * @param {string} name
@@ -27,5 +28,12 @@ describe('action()', () => {
     const parsed = JSON.parse(result);
     assert.equal(typeof parsed.formatted, 'string');
     assert.ok(parsed.formatted.includes('`Plugin`'));
+  });
+
+  it('ResultError is an Error subclass with correct name', () => {
+    const err = new ResultError('test message');
+    assert.ok(err instanceof Error);
+    assert.equal(err.name, 'ResultError');
+    assert.equal(err.message, 'test message');
   });
 });
