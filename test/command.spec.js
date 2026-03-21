@@ -1,3 +1,4 @@
+/* eslint-disable security/detect-non-literal-fs-filename */
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import { createReadStream } from 'node:fs';
@@ -5,17 +6,21 @@ import { readFile } from 'node:fs/promises';
 
 import { command } from '../lib/command.js';
 
+/**
+ * @param {string} name
+ * @returns {URL}
+ */
+const fixture = (name) => new URL(`fixtures/${name}`, import.meta.url);
+
 describe('command()', () => {
   it('should accept the input', async () => {
     const result = await command(
       [],
-      // eslint-disable-next-line security/detect-non-literal-fs-filename
-      createReadStream(new URL('fixtures/input.txt', import.meta.url))
+      createReadStream(fixture('input.txt'))
     );
 
     assert.deepEqual(result, {
-      // eslint-disable-next-line security/detect-non-literal-fs-filename
-      mainInput: await readFile(new URL('fixtures/input.txt', import.meta.url), 'utf8'),
+      mainInput: await readFile(fixture('input.txt'), 'utf8'),
       outputJson: false,
       outputMarkdown: false,
     });
@@ -24,8 +29,7 @@ describe('command()', () => {
   it('should accept markdown flag', async () => {
     const result = await command(
       ['--markdown'],
-      // eslint-disable-next-line security/detect-non-literal-fs-filename
-      createReadStream(new URL('fixtures/input.txt', import.meta.url))
+      createReadStream(fixture('input.txt'))
     );
 
     assert.equal(result.outputMarkdown, true);
@@ -34,8 +38,7 @@ describe('command()', () => {
   it('should accept json flag', async () => {
     const result = await command(
       ['--json'],
-      // eslint-disable-next-line security/detect-non-literal-fs-filename
-      createReadStream(new URL('fixtures/input.txt', import.meta.url))
+      createReadStream(fixture('input.txt'))
     );
 
     assert.equal(result.outputJson, true);

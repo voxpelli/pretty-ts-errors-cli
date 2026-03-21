@@ -30,6 +30,7 @@
     "check:type-coverage": "type-coverage --detail --strict --at-least 99 --ignore-files 'test/*'",
     "check": "run-p check:* --continue-on-error",
     "example-ansi": "cat test/fixtures/input.txt | node cli.js",
+    "example-json": "cat test/fixtures/input.txt | node cli.js -j",
     "example-md": "cat test/fixtures/input.txt | node cli.js -m",
     "husky-disable": "git config --unset core.hooksPath",
     "husky-enable": "husky",
