@@ -28,13 +28,19 @@ npm install -D @voxpelli/pretty-ts-errors-cli
 Terminal output:
 
 ```sh
-cat examples/input.txt | pretty-ts-errors
+cat test/fixtures/input.txt | pretty-ts-errors
 ```
 
 Markdown output:
 
 ```sh
-cat examples/input.txt | pretty-ts-errors -m
+cat test/fixtures/input.txt | pretty-ts-errors -m
+```
+
+JSON output (useful for programmatic consumption):
+
+```sh
+cat test/fixtures/input.txt | pretty-ts-errors -j
 ```
 
 ## Example output
