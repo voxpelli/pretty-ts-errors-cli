@@ -1,14 +1,9 @@
+import { describe, it } from 'node:test';
+import assert from 'node:assert/strict';
 import { createReadStream } from 'node:fs';
-
-import chai from 'chai';
-import chaiAsPromised from 'chai-as-promised';
-
-import { command } from '../lib/command.js';
 import { readFile } from 'node:fs/promises';
 
-chai.use(chaiAsPromised);
-
-chai.should();
+import { command } from '../lib/command.js';
 
 describe('command()', () => {
   it('should accept the input', async () => {
@@ -18,7 +13,7 @@ describe('command()', () => {
       createReadStream(new URL('fixtures/input.txt', import.meta.url))
     );
 
-    result.should.deep.equal({
+    assert.deepEqual(result, {
       // eslint-disable-next-line security/detect-non-literal-fs-filename
       mainInput: await readFile(new URL('fixtures/input.txt', import.meta.url), 'utf8'),
       outputMarkdown: false,
@@ -32,6 +27,6 @@ describe('command()', () => {
       createReadStream(new URL('fixtures/input.txt', import.meta.url))
     );
 
-    result.should.be.an('object').with.property('outputMarkdown', true);
+    assert.equal(result.outputMarkdown, true);
   });
 });
