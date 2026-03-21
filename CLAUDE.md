@@ -6,7 +6,7 @@ Guidance for AI assistants working in this repository.
 
 `@voxpelli/pretty-ts-errors-cli` — a Node.js CLI tool that reads raw TypeScript
 compiler error messages from stdin and outputs them formatted as ANSI-coloured
-text or Markdown, using `@pretty-ts-errors/formatter`.
+text, Markdown, or JSON, using `@pretty-ts-errors/formatter`.
 
 ## Fast Path
 
@@ -14,7 +14,7 @@ text or Markdown, using `@pretty-ts-errors/formatter`.
 - Entry point: `cli.js`; all logic lives under `lib/`
 - Output styling lives in the `codeBlockFn` callback inside `lib/action.js`, passed to
   `formatDiagnosticMessage(input, codeBlockFn)` from `@pretty-ts-errors/formatter`
-- Tests use **Mocha + Chai** + **c8** and snapshot-test against `test/fixtures/output.md`
+- Tests use **node:test + assert** + **c8** and snapshot-test against `test/fixtures/output.md`
 - Validate with `npm test` before finalising any change
 
 ## Commands
@@ -28,14 +28,14 @@ text or Markdown, using `@pretty-ts-errors/formatter`.
 | `npm run check:type-coverage` | Type coverage — minimum 99 % |
 | `npm run check:knip` | Dead-code / unused-dependency detection |
 | `npm run check:installed-check` | Verify installed deps match `package.json` |
-| `npm run test:mocha` | Runtime tests with c8 coverage |
-| `npm run test:mocha -- --grep "pattern"` | Run a focused subset of tests |
+| `npm run test:node` | Runtime tests with c8 coverage |
+| `npm run test:node -- --test-name-pattern "pattern"` | Run a focused subset of tests |
 | `npm run test-ci` | Tests only — skips static-analysis checks |
 | `npm run example-ansi` | Preview ANSI-coloured output |
 | `npm run example-md` | Preview Markdown output |
 
 No lockfile is committed (`package-lock=false` in `.npmrc`).
-A Husky pre-push hook runs `npm test` automatically.
+A Husky pre-push hook runs `npm test` automatically (`npm run husky-disable` to opt out).
 
 ## Architecture
 
@@ -49,18 +49,19 @@ lib/
     errors.js   ← InputError (exit 1) and ResultError (exit 2)
     pkg.js      ← reads package.json for version info
 test/
-  *.spec.js     ← Mocha + Chai tests
+  *.spec.js     ← node:test + assert tests
   fixtures/     ← input.txt (raw TS error) + output.md (expected Markdown snapshot)
 ```
 
 Markdown output always appends a `_Generated using..._` attribution footer — intentional and tested.
+JSON output (`-j`) skips the footer and wraps the formatted Markdown in `{"formatted":"..."}`.
 
 ## Code Style
 
 - **Types-in-JS**: JSDoc `@typedef`, `@param {import('...')}`, and `@satisfies` — no `.ts` source files
 - **neostandard** style enforced by `@voxpelli/eslint-config`
 - 2-space indentation, LF line endings, UTF-8 (see `.editorconfig`)
-- Extends `@voxpelli/tsconfig/node20.json`; requires Node.js `^20.9.0 || >=21.1.0`
+- Extends `@voxpelli/tsconfig/node20.json`; requires Node.js `^20.19.0 || ^22.13.0 || >=24`
 
 ## Guardrails
 
