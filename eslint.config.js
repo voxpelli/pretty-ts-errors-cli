@@ -1,1 +1,5 @@
-export { default } from '@voxpelli/eslint-config';
+import { voxpelli } from '@voxpelli/eslint-config';
+
+export default voxpelli({
+  noMocha: true,
+});
