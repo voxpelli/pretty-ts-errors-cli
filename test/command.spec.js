@@ -54,7 +54,7 @@ describe('command()', () => {
   });
 
   it('should reject empty input', async () => {
-    const empty = Readable.from('');
+    const empty = /** @type {import('node:fs').ReadStream} */ (Readable.from(''));
     await assert.rejects(
       () => command([], empty),
       (/** @type {unknown} */ err) => err instanceof InputError && err.message === 'Empty input'

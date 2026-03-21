@@ -8,46 +8,50 @@ import { messageWithCauses, stackWithCauses } from 'pony-cause';
 import { cli } from './lib/main.js';
 import { InputError, ResultError } from './lib/utils/errors.js';
 
+/** @type {ReadonlySet<string>} */
+const PARSE_ARGS_ERROR_CODES = new Set([
+  'ERR_PARSE_ARGS_UNKNOWN_OPTION',
+  'ERR_PARSE_ARGS_INVALID_OPTION_VALUE',
+]);
+
+/**
+ * @param {unknown} err
+ * @returns {{ title: string, message: string, body?: string }}
+ */
+function classifyError (err) {
+  if (err instanceof InputError) {
+    if (err.body !== undefined) {
+      return { title: 'Invalid input', message: err.message, body: err.body };
+    }
+    return { title: 'Invalid input', message: err.message };
+  }
+  if (isErrorWithCode(err) && PARSE_ARGS_ERROR_CODES.has(err.code)) {
+    return { title: 'Invalid input', message: err.message };
+  }
+  if (err instanceof Error) {
+    return { title: 'Unexpected error', message: messageWithCauses(err), body: stackWithCauses(err) };
+  }
+  return { title: 'Unexpected error with no details', message: '' };
+}
+
 try {
   await cli();
 } catch (err) {
-  /** @type {string|undefined} */
-  let errorTitle;
-  /** @type {string} */
-  let errorMessage = '';
-  /** @type {string|undefined} */
-  let errorBody;
+  const format = new MarkdownOrChalk(false);
 
   if (err instanceof ResultError) {
+    // eslint-disable-next-line no-console
+    console.error(`${format.chalk?.white.bgRed('Result error:')} ${err.message}`);
     process.exit(2);
   }
 
-  if (err instanceof InputError) {
-    errorTitle = 'Invalid input';
-    errorMessage = err.message;
-    errorBody = err.body;
-  } else if (isErrorWithCode(err) && (err.code === 'ERR_PARSE_ARGS_UNKNOWN_OPTION' || err.code === 'ERR_PARSE_ARGS_INVALID_OPTION_VALUE')) {
-    errorTitle = 'Invalid input';
-    errorMessage = err.message;
-  }
-
-  if (!errorTitle) {
-    if (err instanceof Error) {
-      errorTitle = 'Unexpected error';
-      errorMessage = messageWithCauses(err);
-      errorBody = stackWithCauses(err);
-    } else {
-      errorTitle = 'Unexpected error with no details';
-    }
-  }
-
-  const format = new MarkdownOrChalk(false);
+  const { body, message, title } = classifyError(err);
 
   // eslint-disable-next-line no-console
-  console.error(`${format.chalk?.white.bgRed(errorTitle + ':')} ${errorMessage}`);
-  if (errorBody) {
+  console.error(`${format.chalk?.white.bgRed(title + ':')} ${message}`);
+  if (body) {
     // eslint-disable-next-line no-console
-    console.error('\n' + errorBody);
+    console.error('\n' + body);
   }
 
   process.exit(1);
