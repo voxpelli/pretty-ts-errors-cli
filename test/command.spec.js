@@ -14,11 +14,13 @@ import { InputError } from '../lib/utils/errors.js';
  */
 const fixture = (name) => new URL(`fixtures/${name}`, import.meta.url);
 
+const inputStream = () => createReadStream(fixture('input.txt'));
+
 describe('command()', () => {
   it('should accept the input', async () => {
     const result = await command(
       [],
-      createReadStream(fixture('input.txt'))
+      inputStream()
     );
 
     assert.deepEqual(result, {
@@ -31,7 +33,7 @@ describe('command()', () => {
   it('should accept markdown flag', async () => {
     const result = await command(
       ['--markdown'],
-      createReadStream(fixture('input.txt'))
+      inputStream()
     );
 
     assert.equal(result.outputMarkdown, true);
@@ -40,7 +42,7 @@ describe('command()', () => {
   it('should accept json flag', async () => {
     const result = await command(
       ['--json'],
-      createReadStream(fixture('input.txt'))
+      inputStream()
     );
 
     assert.equal(result.outputJson, true);
@@ -48,7 +50,7 @@ describe('command()', () => {
 
   it('should reject positional arguments', async () => {
     await assert.rejects(
-      () => command(['unexpected'], createReadStream(fixture('input.txt'))),
+      () => command(['unexpected'], inputStream()),
       (/** @type {unknown} */ err) => err instanceof InputError && err.message.includes('Positional')
     );
   });
@@ -63,7 +65,7 @@ describe('command()', () => {
 
   it('should reject --json and --markdown used together', async () => {
     await assert.rejects(
-      () => command(['--json', '--markdown'], createReadStream(fixture('input.txt'))),
+      () => command(['--json', '--markdown'], inputStream()),
       (/** @type {unknown} */ err) => err instanceof InputError && err.message.includes('mutually exclusive')
     );
   });
