@@ -28,13 +28,7 @@ function formatErrorTitle (format, text) {
  * @returns {{ title: string, message: string, body?: string }}
  */
 function classifyError (err) {
-  if (err instanceof InputError) {
-    if (err.body !== undefined) {
-      return { title: 'Invalid input', message: err.message, body: err.body };
-    }
-    return { title: 'Invalid input', message: err.message };
-  }
-  if (isErrorWithCode(err) && PARSE_ARGS_ERROR_CODES.has(err.code)) {
+  if (err instanceof InputError || (isErrorWithCode(err) && PARSE_ARGS_ERROR_CODES.has(err.code))) {
     return { title: 'Invalid input', message: err.message };
   }
   if (err instanceof Error) {
