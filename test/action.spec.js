@@ -1,19 +1,13 @@
-/* eslint-disable security/detect-non-literal-fs-filename */
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
 
 import { action } from '../lib/action.js';
 import { ResultError } from '../lib/utils/errors.js';
 
-/**
- * @param {string} name
- * @returns {URL}
- */
-const fixture = (name) => new URL(`fixtures/${name}`, import.meta.url);
+import { readFixture } from './helpers.js';
 
-const mainInput = await readFile(fixture('input.txt'), 'utf8');
-const expectedMarkdown = await readFile(fixture('output.md'), 'utf8');
+const mainInput = await readFixture('input.txt');
+const expectedMarkdown = await readFixture('output.md');
 
 describe('action()', () => {
   it('should format the output', () => {
