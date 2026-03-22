@@ -19,6 +19,6 @@ describe('action()', () => {
 
     const parsed = JSON.parse(result);
     assert.equal(typeof parsed.formatted, 'string');
-    assert.ok(parsed.formatted.includes('`Plugin`'));
+    assert.match(parsed.formatted, /`Plugin`/);
   });
 });
