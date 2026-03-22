@@ -12,17 +12,16 @@ import { ResultError } from '../lib/utils/errors.js';
  */
 const fixture = (name) => new URL(`fixtures/${name}`, import.meta.url);
 
-describe('action()', () => {
-  it('should format the output', async () => {
-    const mainInput = await readFile(fixture('input.txt'), 'utf8');
-    const result = action({ mainInput, outputJson: false, outputMarkdown: true });
+const mainInput = await readFile(fixture('input.txt'), 'utf8');
+const expectedMarkdown = await readFile(fixture('output.md'), 'utf8');
 
-    const expected = await readFile(fixture('output.md'), 'utf8');
-    assert.equal(result + '\n', expected);
+describe('action()', () => {
+  it('should format the output', () => {
+    const result = action({ mainInput, outputJson: false, outputMarkdown: true });
+    assert.equal(result + '\n', expectedMarkdown);
   });
 
-  it('should format as JSON', async () => {
-    const mainInput = await readFile(fixture('input.txt'), 'utf8');
+  it('should format as JSON', () => {
     const result = action({ mainInput, outputJson: true, outputMarkdown: false });
 
     const parsed = JSON.parse(result);
