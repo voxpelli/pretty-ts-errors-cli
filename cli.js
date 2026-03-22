@@ -15,6 +15,15 @@ const PARSE_ARGS_ERROR_CODES = new Set([
 ]);
 
 /**
+ * @param {MarkdownOrChalk} format
+ * @param {string} text
+ * @returns {string}
+ */
+function formatErrorTitle (format, text) {
+  return format.chalk?.white.bgRed(text + ':') ?? (text + ':');
+}
+
+/**
  * @param {unknown} err
  * @returns {{ title: string, message: string, body?: string }}
  */
@@ -41,13 +50,13 @@ try {
 
   if (err instanceof ResultError) {
     // eslint-disable-next-line no-console
-    console.error(`${format.chalk?.white.bgRed('Result error:')} ${messageWithCauses(err)}`);
+    console.error(`${formatErrorTitle(format, 'Result error')} ${messageWithCauses(err)}`);
     process.exitCode = 2;
   } else {
     const { body, message, title } = classifyError(err);
 
     // eslint-disable-next-line no-console
-    console.error(`${format.chalk?.white.bgRed(title + ':')} ${message}`);
+    console.error(`${formatErrorTitle(format, title)} ${message}`);
     if (body) {
       // eslint-disable-next-line no-console
       console.error('\n' + body);
