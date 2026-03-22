@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 
-import { isErrorWithCode } from '@voxpelli/typed-utils';
 import { MarkdownOrChalk } from 'markdown-or-chalk';
-
 import { messageWithCauses, stackWithCauses } from 'pony-cause';
 
 import { cli } from './lib/main.js';
@@ -13,6 +11,14 @@ const PARSE_ARGS_ERROR_CODES = new Set([
   'ERR_PARSE_ARGS_UNKNOWN_OPTION',
   'ERR_PARSE_ARGS_INVALID_OPTION_VALUE',
 ]);
+
+/**
+ * @param {unknown} value
+ * @returns {value is Error & { code: string }}
+ */
+function isErrorWithCode (value) {
+  return value instanceof Error && 'code' in value;
+}
 
 /**
  * @param {MarkdownOrChalk} format
