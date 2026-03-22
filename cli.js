@@ -41,7 +41,7 @@ try {
 
   if (err instanceof ResultError) {
     // eslint-disable-next-line no-console
-    console.error(`${format.chalk?.white.bgRed('Result error:')} ${err.message}`);
+    console.error(`${format.chalk?.white.bgRed('Result error:')} ${messageWithCauses(err)}`);
     process.exitCode = 2;
   } else {
     const { body, message, title } = classifyError(err);
