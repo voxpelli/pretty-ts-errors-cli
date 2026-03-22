@@ -9,7 +9,7 @@ const mainInput = await readFixture('input.txt');
 const expectedMarkdown = await readFixture('output.md');
 
 describe('action()', () => {
-  it('should format the output', () => {
+  it('should format as Markdown', () => {
     const result = action({ mainInput, outputJson: false, outputMarkdown: true });
     assert.equal(result + '\n', expectedMarkdown);
   });
