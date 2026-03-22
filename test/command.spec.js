@@ -43,7 +43,11 @@ describe('command()', () => {
   it('should reject positional arguments', async () => {
     await assert.rejects(
       () => command(['unexpected'], inputStream()),
-      (/** @type {unknown} */ err) => err instanceof InputError && err.message.includes('Positional')
+      (/** @type {unknown} */ err) => {
+        assert.ok(err instanceof InputError);
+        assert.match(err.message, /Positional/);
+        return true;
+      }
     );
   });
 
@@ -58,7 +62,11 @@ describe('command()', () => {
   it('should reject --json and --markdown used together', async () => {
     await assert.rejects(
       () => command(['--json', '--markdown'], inputStream()),
-      (/** @type {unknown} */ err) => err instanceof InputError && err.message.includes('mutually exclusive')
+      (/** @type {unknown} */ err) => {
+        assert.ok(err instanceof InputError);
+        assert.match(err.message, /mutually exclusive/);
+        return true;
+      }
     );
   });
 });
