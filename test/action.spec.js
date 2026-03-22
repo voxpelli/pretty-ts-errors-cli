@@ -14,6 +14,12 @@ describe('action()', () => {
     assert.equal(result + '\n', expectedMarkdown);
   });
 
+  it('should format as ANSI by default', () => {
+    const result = action({ mainInput, outputJson: false, outputMarkdown: false });
+    assert.ok(result.length > 0);
+    assert.doesNotMatch(result, /_Generated using/);
+  });
+
   it('should format as JSON', () => {
     const result = action({ mainInput, outputJson: true, outputMarkdown: false });
 
