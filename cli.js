@@ -43,17 +43,14 @@ try {
   const format = new MarkdownOrChalk(false);
 
   if (err instanceof ResultError) {
-    // eslint-disable-next-line no-console
-    console.error(`${formatErrorTitle(format, 'Result error')} ${messageWithCauses(err)}`);
+    process.stderr.write(`${formatErrorTitle(format, 'Result error')} ${messageWithCauses(err)}\n`);
     process.exitCode = 2;
   } else {
     const { body, message, title } = classifyError(err);
 
-    // eslint-disable-next-line no-console
-    console.error(`${formatErrorTitle(format, title)} ${message}`);
+    process.stderr.write(`${formatErrorTitle(format, title)} ${message}\n`);
     if (body) {
-      // eslint-disable-next-line no-console
-      console.error('\n' + body);
+      process.stderr.write(`\n${body}\n`);
     }
 
     process.exitCode = 1;
