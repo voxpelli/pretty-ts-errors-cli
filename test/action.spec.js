@@ -21,5 +21,4 @@ describe('action()', () => {
     assert.equal(typeof parsed.formatted, 'string');
     assert.ok(parsed.formatted.includes('`Plugin`'));
   });
-
 });
