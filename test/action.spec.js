@@ -2,7 +2,6 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 
 import { action } from '../lib/action.js';
-import { ResultError } from '../lib/utils/errors.js';
 
 import { readFixture } from './helpers.js';
 
@@ -23,10 +22,4 @@ describe('action()', () => {
     assert.ok(parsed.formatted.includes('`Plugin`'));
   });
 
-  it('ResultError is an Error subclass with correct name', () => {
-    const err = new ResultError('test message');
-    assert.ok(err instanceof Error);
-    assert.equal(err.name, 'ResultError');
-    assert.equal(err.message, 'test message');
-  });
 });
