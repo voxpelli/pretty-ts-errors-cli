@@ -48,6 +48,16 @@ describe('command()', () => {
     assert.equal(result.outputJson, true);
   });
 
+  it('should accept -j short flag', async () => {
+    const result = await command(['-j'], inputStream());
+    assert.equal(result.outputJson, true);
+  });
+
+  it('should accept -m short flag', async () => {
+    const result = await command(['-m'], inputStream());
+    assert.equal(result.outputMarkdown, true);
+  });
+
   it('should reject positional arguments', async () => {
     await assert.rejects(
       () => command(['unexpected'], inputStream()),
