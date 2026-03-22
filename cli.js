@@ -42,17 +42,17 @@ try {
   if (err instanceof ResultError) {
     // eslint-disable-next-line no-console
     console.error(`${format.chalk?.white.bgRed('Result error:')} ${err.message}`);
-    process.exit(2);
-  }
+    process.exitCode = 2;
+  } else {
+    const { body, message, title } = classifyError(err);
 
-  const { body, message, title } = classifyError(err);
-
-  // eslint-disable-next-line no-console
-  console.error(`${format.chalk?.white.bgRed(title + ':')} ${message}`);
-  if (body) {
     // eslint-disable-next-line no-console
-    console.error('\n' + body);
-  }
+    console.error(`${format.chalk?.white.bgRed(title + ':')} ${message}`);
+    if (body) {
+      // eslint-disable-next-line no-console
+      console.error('\n' + body);
+    }
 
-  process.exit(1);
+    process.exitCode = 1;
+  }
 }
