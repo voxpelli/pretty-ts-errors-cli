@@ -52,7 +52,7 @@
     "mocha": "^10.8.2",
     "npm-run-all2": "^7.0.1",
     "type-coverage": "^2.29.7",
-    "typescript": "~5.7.2"
+    "typescript": "~6.0.3"
   },
   "dependencies": {
     "@pretty-ts-errors/formatter": "^0.1.7",
