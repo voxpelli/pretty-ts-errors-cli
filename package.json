@@ -2,16 +2,25 @@
   "name": "@voxpelli/pretty-ts-errors-cli",
   "version": "1.1.0",
   "description": "CLI helper for pretty ts errors",
-  "homepage": "http://github.com/voxpelli/pretty-ts-errors-cli",
+  "homepage": "https://github.com/voxpelli/pretty-ts-errors-cli",
   "repository": {
     "type": "git",
     "url": "git://github.com/voxpelli/pretty-ts-errors-cli.git"
   },
-  "keywords": [],
+  "keywords": [
+    "typescript",
+    "cli",
+    "errors",
+    "formatter",
+    "pretty-ts-errors",
+    "ansi",
+    "markdown"
+  ],
   "author": "Pelle Wessman <pelle@kodfabrik.se> (http://kodfabrik.se/)",
   "license": "MIT",
   "engines": {
-    "node": "^20.9.0 || >=21.1.0"
+    "node": "^20.19.0 || ^22.13.0 || >=24",
+    "typescript": ">=5.8"
   },
   "bin": {
     "pretty-ts-errors": "cli.js"
@@ -27,36 +36,32 @@
     "check:lint": "eslint",
     "check:tsc": "tsc",
     "check:type-coverage": "type-coverage --detail --strict --at-least 99 --ignore-files 'test/*'",
-    "check": "run-p check:*",
+    "check": "run-p check:* --continue-on-error",
     "example-ansi": "cat test/fixtures/input.txt | node cli.js",
+    "example-json": "cat test/fixtures/input.txt | node cli.js -j",
     "example-md": "cat test/fixtures/input.txt | node cli.js -m",
+    "husky-disable": "git config --unset core.hooksPath",
+    "husky-enable": "husky",
     "prepare": "husky",
-    "test:mocha": "c8 --reporter=lcov --reporter=text mocha 'test/**/*.spec.js'",
+    "test:node": "c8 --reporter=lcov --reporter=text node --test",
     "test-ci": "run-s test:*",
     "test": "run-s check test:*"
   },
   "devDependencies": {
-    "@types/chai": "^4.3.20",
-    "@types/chai-as-promised": "^7.1.8",
-    "@types/mocha": "^10.0.10",
-    "@types/node": "^18.19.67",
+    "@types/node": "^20.0.0",
     "@voxpelli/eslint-config": "^23.0.0",
     "@voxpelli/tsconfig": "^16.1.0",
-    "c8": "^10.1.2",
-    "chai": "^4.5.0",
-    "chai-as-promised": "^7.1.2",
+    "c8": "^11.0.0",
     "eslint": "^9.39.2",
     "husky": "^9.1.7",
-    "installed-check": "^9.3.0",
+    "installed-check": "^10.0.0",
     "knip": "^5.80.0",
-    "mocha": "^10.8.2",
-    "npm-run-all2": "^7.0.1",
+    "npm-run-all2": "^8.0.0",
     "type-coverage": "^2.29.7",
-    "typescript": "~5.7.2"
+    "typescript": "~5.8.0"
   },
   "dependencies": {
     "@pretty-ts-errors/formatter": "^0.1.7",
-    "@voxpelli/typed-utils": "^1.10.2",
     "markdown-or-chalk": "^0.2.3",
     "peowly": "^1.3.2",
     "pony-cause": "^2.1.11"
